@@ -2,7 +2,7 @@
 
 An AI-powered traffic violation reporting platform for Delhi. Citizens photograph violations, AI analyses the evidence, and admins manage enforcement — all in one system.
 
-**Live demo:** https://shipperasap.github.io/delhi-roadwatch/
+**Live demo:** https://shipperasap.github.io/roadwatch_final/
 
 ---
 
@@ -20,7 +20,7 @@ Citizens can report traffic violations by uploading a photo or video. Google Gem
 
 ## Try it instantly (no install)
 
-1. Open the live demo: **https://shipperasap.github.io/delhi-roadwatch/**
+1. Open the live demo: **https://shipperasap.github.io/roadwatch_final/**
 2. On the Setup screen, enter your **Google Gemini API key** (free — see below)
 3. Log in with a demo account (shown on the login page)
 
