@@ -36,25 +36,37 @@ const SEED = {
   violations: [],
 };
 
+// ── Safe localStorage wrapper (guards against iOS private mode SecurityError) ──
+
+function lsGet(key) {
+  try { return localStorage.getItem(key); } catch { return null; }
+}
+
+function lsSet(key, value) {
+  try { localStorage.setItem(key, value); } catch { /* quota or security error — silent */ }
+}
+
 // ── Init (idempotent — runs once per browser) ──────────────────────────────
 
 export function initStore() {
-  if (localStorage.getItem(P + 'seeded')) return;
-  for (const [table, rows] of Object.entries(SEED)) {
-    localStorage.setItem(P + table, JSON.stringify(rows));
-  }
-  localStorage.setItem(P + 'seeded', '1');
+  try {
+    if (lsGet(P + 'seeded')) return;
+    for (const [table, rows] of Object.entries(SEED)) {
+      lsSet(P + table, JSON.stringify(rows));
+    }
+    lsSet(P + 'seeded', '1');
+  } catch { /* localStorage unavailable — app still works, data won't persist */ }
 }
 
 // ── Generic CRUD ───────────────────────────────────────────────────────────
 
 export function getAll(table) {
-  try { return JSON.parse(localStorage.getItem(P + table) || '[]'); }
+  try { return JSON.parse(lsGet(P + table) || '[]'); }
   catch { return []; }
 }
 
 export function setAll(table, rows) {
-  localStorage.setItem(P + table, JSON.stringify(rows));
+  lsSet(P + table, JSON.stringify(rows));
 }
 
 export function dbInsert(table, row) {
